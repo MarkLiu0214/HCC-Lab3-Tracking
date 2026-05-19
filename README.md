@@ -15,9 +15,15 @@ $ ros2 run tello_driver tello_driver_main  # activate tello_ros raw_image node
 ```console=
 $ source /opt/ros/foxy/setup.bash
 $ cd ~/HCC-Lab3-Tracking/
-$ colcon build --symlink-install
+$ colcon build --symlink-install  # Build the workspace
 $ source install/setup.bash
-$ ros2 launch tello_tracking tracking_launch.py
+$ ros2 launch tello_tracking tracking_launch.py  # Launch the tracking program
 ```
 
-After close Terminal 2 manually by `Ctrl + C`, a file named ball_trajectory.csv will be in `~/`
+RViz will appeared after launching tracking_launch.py, follow the instruction to visualized the tracking result:
+1. Fixed frame: choose `camera_frame`
+2. Add `ball_trajectory` and `tracking_result_image` by topic
+3. You can see the tracking result at RViz
+
+
+After close Terminal 2 manually by `Ctrl + C`, a file named `ball_trajectory.csv` will be in `~/`
