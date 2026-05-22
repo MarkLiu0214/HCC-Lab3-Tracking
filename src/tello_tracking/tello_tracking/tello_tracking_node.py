@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from nav_msgs.msg import Path
-from geometry_msgs.msg import PoseStamped, Twist
+from geometry_msgs.msg import PoseStamped
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
@@ -27,11 +27,6 @@ class TelloTrackingNode(Node):
         # 發布 3D 軌跡給 RViz
         self.path_pub = self.create_publisher(Path, '/ball_trajectory', 10)
         
-        # Anti-sleeping
-        self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.timer = self.create_timer(5.0, self.keep_alive_callback)
-
-
         self.cv_bridge = CvBridge()
         
         # 追蹤與速度計算狀態
@@ -49,15 +44,6 @@ class TelloTrackingNode(Node):
         
         # 準備存入 CSV 的資料列表
         self.trajectory_data = []  
-
-    def keep_alive_callback(self):
-        '''
-        anti-sleeping
-        '''
-        msg = Twist()
-        self.cmd_pub.publish(msg)
-        self.get_logger().debug('Keep-alive cmd is sent')
-
 
     def image_callback(self, msg):
         try:
